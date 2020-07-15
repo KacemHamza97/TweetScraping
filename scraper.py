@@ -1,9 +1,11 @@
-from pprint import pprint
+# from pprint import pprint
 import tweepy
 from tweepy import OAuthHandler
 from time import sleep
 from notify_run import Notify
-import json
+
+
+# import json
 
 
 class Tweet:
@@ -25,7 +27,7 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True)  # wait_on_rate_limit=True
 tweets = set()
 while 1:
-    for status in tweepy.Cursor(api.home_timeline).items(1):
+    for status in tweepy.Cursor(api.home_timeline).items(50):
         tweet = Tweet(status._json["id"], status._json["text"])
         if tweet.text not in tweets:
             tweets.add(tweet.text)
