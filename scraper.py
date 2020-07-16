@@ -25,7 +25,7 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True)  # wait_on_rate_limit=True
 tweets = set()
 while 1:
-    for status in tweepy.Cursor(api.home_timeline).items(50):
+    for status in tweepy.Cursor(api.home_timeline, include_entities=True).items(50):
         tweet = Tweet(status._json["id"], status._json["text"])
         if tweet.text not in tweets:
             tweets.add(tweet.text)
