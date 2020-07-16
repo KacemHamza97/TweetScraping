@@ -3,9 +3,7 @@ import tweepy
 from tweepy import OAuthHandler
 from time import sleep
 from notify_run import Notify
-
-
-# import json
+from googletrans import Translator
 
 
 class Tweet:
@@ -14,10 +12,10 @@ class Tweet:
         self.text = text
 
 
+translator = Translator()
 notify = Notify()
 a = notify.register()
 print(a)
-notify.send('Hi there!')
 ACCESS_TOKEN = "241949174-J7mlaEePXSl59Ee7SUSWxJ7UX1pIunz6dTck9IaK"
 ACCESS_TOKEN_SECRET = "KPGs3ZZBcSXRzwxNNOu1vSs0wxdTXPYmjb80O06AwhTmv"
 CONSUMER_KEY = "SSip5qurDw27uvKcDbUZlp7Ub"
@@ -31,6 +29,7 @@ while 1:
         tweet = Tweet(status._json["id"], status._json["text"])
         if tweet.text not in tweets:
             tweets.add(tweet.text)
-            print(tweet.text)
-            notify.send(tweet.text)
-        sleep(10)
+            translation = translator.translate(tweet.text, dest='en')
+            print(translation.text)
+            # notify.send(tweet.text)
+        sleep(60)
